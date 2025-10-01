@@ -51,8 +51,41 @@ bun run src/index.ts
 - `POST /auth/register` - Register new user
 - `POST /auth/login` - Login user
 
-### Health Check
-- `GET /` - API health check
+### Kite Authentication Flow
+
+1. **Generate Login URL**: Send API key and secret to `/kite/login` to get a login URL
+2. **User Login**: Redirect user to the login URL, they authenticate with Kite
+3. **Get Request Token**: After login, Kite redirects back with a request token in the URL
+4. **Generate Access Token**: Send the request token, API key, and secret to `/kite/session`
+5. **Store Token**: Access token is stored in Redis for 24 hours
+6. **Use Token**: Retrieve stored token using `/kite/token/:apiKey` for subsequent API calls
+
+#### Example Usage
+
+```bash
+# 1. Generate login URL
+curl -X POST http://localhost:3000/kite/login \
+  -H "Content-Type: application/json" \
+  -d '{"apiKey":"your-api-key","apiSecret":"your-api-secret"}'
+
+# Response: {"status":"Success","data":{"loginUrl":"https://kite.zerodha.com/connect/login?...","sessionId":"uuid"}}
+
+# 2. After user logs in and gets redirected with request token, generate access token
+# IMPORTANT: Use the sessionId from step 1, not "uuid"
+curl -X POST http://localhost:3000/kite/session \
+  -H "Content-Type: application/json" \
+  -d '{"sessionId":"actual-session-id-from-step-1","requestToken":"request-token-from-url","apiKey":"your-api-key","apiSecret":"your-api-secret"}'
+
+# 3. Get stored access token for API calls
+curl http://localhost:3000/kite/token/your-api-key
+```
+
+### Kite Authentication
+- `POST /kite/login` - Generate Kite login URL
+- `POST /kite/session` - Generate access token from request token
+- `GET /kite/token/:apiKey` - Get stored access token
+- `GET /kite/callback` - Handle Kite callback (extracts request token)
+- `GET /trade/callback` - Alternative callback route
 
 ## Logging
 
