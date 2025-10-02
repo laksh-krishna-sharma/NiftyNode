@@ -3,6 +3,11 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "start": "bun src/index.ts",
+    "watch": "bun --watch index.ts",
+    "inspector": "bunx @modelcontextprotocol/inspector bun src/mcp-server.ts"
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",

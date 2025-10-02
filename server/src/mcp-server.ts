@@ -456,3 +456,6 @@ main().catch((error) => {
   logger.error(`MCP Server error: ${error}`);
   process.exit(1);
 });
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
