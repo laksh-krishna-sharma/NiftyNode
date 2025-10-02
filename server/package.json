@@ -16,8 +16,9 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@cerebras/cerebras_cloud_sdk": "^1.50.0",
     "@fastify/websocket": "^11.2.0",
-    "@modelcontextprotocol/sdk": "^1.18.1",
+    "@modelcontextprotocol/sdk": "^1.18.2",
     "@prisma/client": "^6.16.2",
     "bcrypt": "^5.1.1",
     "fastify": "^5.6.1",
