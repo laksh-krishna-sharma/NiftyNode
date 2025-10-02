@@ -93,19 +93,19 @@ server.registerTool(
         return {
           content: [{
             type: "text",
-            text: `✅ Buy order placed successfully!\n📈 Stock: ${tradingSymbol}\n📊 Quantity: ${quantity}\n💰 Order ID: ${result.data.orderId}\n📋 Status: ${result.data.status}`
+            text: ` Buy order placed successfully!\n📈 Stock: ${tradingSymbol}\n📊 Quantity: ${quantity}\n💰 Order ID: ${result.data.orderId}\n📋 Status: ${result.data.status}`
           }]
         };
       } else {
         return {
-          content: [{ type: "text", text: `❌ Buy order failed: ${result.data.message}` }],
+          content: [{ type: "text", text: ` Buy order failed: ${result.data.message}` }],
           isError: true
         };
       }
     } catch (error: any) {
       logger.error(`MCP Buy order error: ${error.message}`);
       return {
-        content: [{ type: "text", text: `❌ Error placing buy order: ${error.message}` }],
+        content: [{ type: "text", text: ` Error placing buy order: ${error.message}` }],
         isError: true
       };
     }
@@ -152,19 +152,19 @@ server.registerTool(
         return {
           content: [{
             type: "text",
-            text: `✅ Sell order placed successfully!\n📉 Stock: ${tradingSymbol}\n📊 Quantity: ${quantity}\n💰 Order ID: ${result.data.orderId}\n📋 Status: ${result.data.status}`
+            text: ` Sell order placed successfully!\n📉 Stock: ${tradingSymbol}\n📊 Quantity: ${quantity}\n💰 Order ID: ${result.data.orderId}\n📋 Status: ${result.data.status}`
           }]
         };
       } else {
         return {
-          content: [{ type: "text", text: `❌ Sell order failed: ${result.data.message}` }],
+          content: [{ type: "text", text: ` Sell order failed: ${result.data.message}` }],
           isError: true
         };
       }
     } catch (error: any) {
       logger.error(`MCP Sell order error: ${error.message}`);
       return {
-        content: [{ type: "text", text: `❌ Error placing sell order: ${error.message}` }],
+        content: [{ type: "text", text: ` Error placing sell order: ${error.message}` }],
         isError: true
       };
     }
@@ -212,14 +212,14 @@ server.registerTool(
         };
       } else {
         return {
-          content: [{ type: "text", text: "❌ Failed to retrieve portfolio data" }],
+          content: [{ type: "text", text: " Failed to retrieve portfolio data" }],
           isError: true
         };
       }
     } catch (error: any) {
       logger.error(`MCP Portfolio analysis error: ${error.message}`);
       return {
-        content: [{ type: "text", text: `❌ Error analyzing portfolio: ${error.message}` }],
+        content: [{ type: "text", text: ` Error analyzing portfolio: ${error.message}` }],
         isError: true
       };
     }
@@ -258,7 +258,7 @@ server.registerTool(
 
       if (profile.status !== 'Success' || positions.status !== 'Success') {
         return {
-          content: [{ type: "text", text: "❌ Unable to retrieve portfolio data for report generation" }],
+          content: [{ type: "text", text: " Unable to retrieve portfolio data for report generation" }],
           isError: true
         };
       }
@@ -291,7 +291,7 @@ Make it comprehensive but concise.`;
 
       const aiResponse = await cerebras.chat.completions.create({
         messages: [{ role: "user", content: analysisPrompt }],
-        model: "llama3.1-70b",
+        model: "llama-4-scout-17b-16e-instruct",
         max_tokens: 2000,
         temperature: 0.7
       });
@@ -318,7 +318,7 @@ Make it comprehensive but concise.`;
     } catch (error: any) {
       logger.error(`MCP Report generation error: ${error.message}`);
       return {
-        content: [{ type: "text", text: `❌ Error generating portfolio report: ${error.message}` }],
+        content: [{ type: "text", text: ` Error generating portfolio report: ${error.message}` }],
         isError: true
       };
     }
@@ -357,7 +357,7 @@ Be specific and data-driven in your analysis.`;
 
       const aiResponse = await cerebras.chat.completions.create({
         messages: [{ role: "user", content: analysisPrompt }],
-        model: "llama3.1-70b",
+        model: "llama-4-scout-17b-16e-instruct",
         max_tokens: 1500,
         temperature: 0.6
       });
@@ -374,7 +374,7 @@ Be specific and data-driven in your analysis.`;
     } catch (error: any) {
       logger.error(`MCP Market analysis error: ${error.message}`);
       return {
-        content: [{ type: "text", text: `❌ Error analyzing market sentiment: ${error.message}` }],
+        content: [{ type: "text", text: ` Error analyzing market sentiment: ${error.message}` }],
         isError: true
       };
     }
@@ -421,7 +421,7 @@ Tailor the strategy to the user's risk profile and current holdings.`;
 
       const aiResponse = await cerebras.chat.completions.create({
         messages: [{ role: "user", content: strategyPrompt }],
-        model: "llama3.1-70b",
+        model: "llama-4-scout-17b-16e-instruct",
         max_tokens: 1800,
         temperature: 0.7
       });
@@ -438,7 +438,7 @@ Tailor the strategy to the user's risk profile and current holdings.`;
     } catch (error: any) {
       logger.error(`MCP Strategy generation error: ${error.message}`);
       return {
-        content: [{ type: "text", text: `❌ Error generating trading strategy: ${error.message}` }],
+        content: [{ type: "text", text: ` Error generating trading strategy: ${error.message}` }],
         isError: true
       };
     }
