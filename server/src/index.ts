@@ -2,6 +2,8 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import authRoutes from './auth/routes/authRoutes';
 import kiteAuthRoutes from './kite-auth/routes/kiteAuthRoutes';
+import kiteOrderRoutes from './kite-order/routes/kiteOrderRoutes';
+import kiteProfileRoutes from './kite-profile/routes/kiteProfileRoutes';
 import logger from './utils/logger';
 import { setSuccess } from './utils/responseHelper';
 import appConfig from './config';
@@ -39,6 +41,8 @@ fastify.addHook('onSend', (request, reply, payload, done) => {
 
 fastify.register(authRoutes);
 fastify.register(kiteAuthRoutes);
+fastify.register(kiteOrderRoutes);
+fastify.register(kiteProfileRoutes);
 
 fastify.addHook('onRequest', (request, reply, done) => {
   logger.debug(`${request.method} ${request.url} - ${request.ip}`);
