@@ -4,39 +4,27 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  --color-ring: rgb(var(--ring));
+  --color-input: rgba(var(--input));
+  --color-border: rgb(var(--border));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-accent: rgba(var(--accent));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-muted: rgba(var(--muted));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-secondary: rgba(var(--secondary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-popover: rgba(var(--popover));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-card: rgba(var(--card));
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -45,78 +33,333 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+  --card: 255 255 255;
+  --card-foreground: 15 23 42;
+  --popover: 255 255 255;
+  --popover-foreground: 15 23 42;
+  --primary: 96 165 250;
+  --primary-foreground: 255 255 255;
+  --secondary: 241 245 249;
+  --secondary-foreground: 15 23 42;
+  --muted: 248 250 252;
+  --muted-foreground: 100 116 139;
+  --accent: 241 245 249;
+  --accent-foreground: 15 23 42;
+  --destructive: 239 68 68;
+  --destructive-foreground: 255 255 255;
+  --border: 226 232 240;
+  --input: 226 232 240;
+  --ring: 96 165 250;
+  --chart-1: 96 165 250;
+  --chart-2: 34 197 94;
+  --chart-3: 251 191 36;
+  --chart-4: 168 85 247;
+  --chart-5: 239 68 68;
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: 0 0 0;
+  --foreground: 255 255 255;
+  --card: 0 0 0 / 0.3;
+  --card-foreground: 255 255 255;
+  --popover: 0 0 0 / 0.8;
+  --popover-foreground: 255 255 255;
+  --primary: 255 255 255;
+  --primary-foreground: 0 0 0;
+  --secondary: 0 0 0 / 0.2;
+  --secondary-foreground: 255 255 255;
+  --muted: 0 0 0 / 0.1;
+  --muted-foreground: 156 163 175;
+  --accent: 0 0 0 / 0.2;
+  --accent-foreground: 255 255 255;
+  --destructive: 255 255 255;
+  --destructive-foreground: 0 0 0;
+  --border: 75 85 99;
+  --input: 0 0 0 / 0.3;
+  --ring: 156 163 175;
+  --chart-1: 255 255 255;
+  --chart-2: 229 231 235;
+  --chart-3: 209 213 219;
+  --chart-4: 156 163 175;
+  --chart-5: 107 114 128;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground;
+  }
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Touch targets for mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Dark theme specific styles */
+.dark {
+  background-color: black !important;
+}
+
+/* Glass effect for all components */
+.dark * {
+  backdrop-filter: blur(10px);
+}
+
+.dark .bg-card,
+.dark [class*="bg-card"] {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark .bg-secondary,
+.dark [class*="bg-secondary"] {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark .bg-muted,
+.dark [class*="bg-muted"] {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark .bg-accent,
+.dark [class*="bg-accent"] {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark .bg-background,
+.dark [class*="bg-background"] {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Remove all blue colors */
+.dark .text-primary,
+.dark [class*="text-primary"] {
+  color: white !important;
+}
+
+.dark .text-blue-600,
+.dark .text-blue-500,
+.dark .text-blue-400,
+.dark [class*="text-blue"] {
+  color: white !important;
+}
+
+.dark .bg-blue-500,
+.dark .bg-blue-600,
+.dark .bg-blue-400,
+.dark [class*="bg-blue"] {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Button styles for dark mode */
+.dark .bg-primary,
+.dark [class*="bg-primary"] {
+  background-color: white !important;
+  color: black !important;
+}
+
+.dark .bg-primary:hover,
+.dark [class*="bg-primary"]:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark button,
+.dark .btn {
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark button[variant="outline"],
+.dark .btn-outline {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: white !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark button[variant="outline"]:hover,
+.dark .btn-outline:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark button[variant="ghost"]:hover,
+.dark .btn-ghost:hover {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Input styles for dark mode */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: white !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: rgb(156, 163, 175) !important;
+  box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2) !important;
+}
+
+/* Gradient overrides */
+.dark .bg-gradient-to-br,
+.dark [class*="bg-gradient"] {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Border overrides */
+.dark .border-primary,
+.dark [class*="border-primary"] {
+  border-color: rgb(75, 85, 99) !important;
+}
+
+.dark .border-blue-200,
+.dark .border-blue-300,
+.dark [class*="border-blue"] {
+  border-color: rgb(75, 85, 99) !important;
+}
+
+/* Icon color overrides */
+.dark svg,
+.dark .icon {
+  color: white !important;
+}
+
+/* Specific component overrides */
+.dark [class*="hover:shadow-lg"]:hover,
+.dark [class*="hover:shadow-md"]:hover {
+  box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Force all components to have glass effect */
+.dark div,
+.dark section,
+.dark article,
+.dark aside,
+.dark nav,
+.dark header,
+.dark footer {
+  backdrop-filter: blur(10px);
+}
+
+/* Override any remaining blue/colored backgrounds */
+.dark [class*="bg-blue"],
+.dark [class*="bg-indigo"],
+.dark [class*="bg-purple"],
+.dark [class*="bg-violet"],
+.dark [class*="bg-sky"],
+.dark [class*="bg-cyan"] {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Override any remaining colored text */
+.dark [class*="text-blue"],
+.dark [class*="text-indigo"],
+.dark [class*="text-purple"],
+.dark [class*="text-violet"],
+.dark [class*="text-sky"],
+.dark [class*="text-cyan"] {
+  color: white !important;
+}
+
+/* Override any remaining colored borders */
+.dark [class*="border-blue"],
+.dark [class*="border-indigo"],
+.dark [class*="border-purple"],
+.dark [class*="border-violet"],
+.dark [class*="border-sky"],
+.dark [class*="border-cyan"] {
+  border-color: rgb(75, 85, 99) !important;
+}
+
+/* Ensure all interactive elements have glass effect */
+.dark button,
+.dark input,
+.dark textarea,
+.dark select,
+.dark [role="button"],
+.dark [role="textbox"],
+.dark [role="combobox"] {
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Override focus states */
+.dark *:focus,
+.dark [class*="focus-visible"]:focus-visible {
+  outline-color: rgba(156, 163, 175, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2) !important;
+}
+
+/* Ensure sidebar has glass effect */
+.dark .sidebar,
+.dark [class*="sidebar"] {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* Mobile menu overlay */
+.dark [class*="fixed"][class*="inset-0"] {
+  backdrop-filter: blur(5px) !important;
+}
+
+/* Additional shadow and hover overrides */
+.dark [class*="shadow"] {
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark [class*="transition"] {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 200ms !important;
 }
