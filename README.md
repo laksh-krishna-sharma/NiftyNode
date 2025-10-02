@@ -105,6 +105,9 @@ curl "http://localhost:3000/kite/orders?apiKey=your-api-key"
 
 # 7. Get positions
 curl "http://localhost:3000/kite/positions?apiKey=your-api-key"
+
+# 8. Get user profile
+curl "http://localhost:3000/kite/profile?apiKey=your-api-key"
 ```
 
 ### Kite Authentication
@@ -118,6 +121,9 @@ curl "http://localhost:3000/kite/positions?apiKey=your-api-key"
 - `POST /kite/order/place` - Place buy/sell orders
 - `GET /kite/orders` - Get order book
 - `GET /kite/positions` - Get current positions
+
+### Kite User Profile
+- `GET /kite/profile` - Get user profile information
 
 ## Logging
 
