@@ -9,6 +9,7 @@
     "inspector": "bunx @modelcontextprotocol/inspector bun src/mcp-server.ts"
   },
   "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.17.0",
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
     "@types/jsonwebtoken": "^9.0.7",
