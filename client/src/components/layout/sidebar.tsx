@@ -124,7 +124,7 @@ export function Sidebar({ activeItem, isOpen = true, onClose, isMobile = false }
 
   // Desktop Sidebar
   return (
-    <div className="w-64 h-screen bg-background border-r border-border flex flex-col hidden lg:flex backdrop-blur-lg">
+    <div className="w-64 h-screen bg-background border-r border-border flex flex-col lg:flex backdrop-blur-lg">
       {/* Header */}
       <div className="p-6 border-b border-border">
         <button 
