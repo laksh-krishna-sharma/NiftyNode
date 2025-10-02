@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast, Id } from 'react-toastify';
 import api from '../../api';
 
 export interface LoginData {
@@ -23,6 +24,7 @@ export interface LoginState {
   isLoading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+  toastId: Id | null;
 }
 
 const initialState: LoginState = {
@@ -31,6 +33,7 @@ const initialState: LoginState = {
   isLoading: false,
   error: null,
   isAuthenticated: !!localStorage.getItem('token'),
+  toastId: null,
 };
 
 // Async thunk for user login
@@ -51,7 +54,11 @@ export const loginUser = createAsyncThunk<
       
       return response.data.data;
     } catch (error: any) {
-      const message = error.response?.data?.message || error.message || 'Login failed';
+      const message =
+        error.response?.data?.data?.message ||
+        error.response?.data?.message ||
+        error.message ||
+        'Login failed';
       return rejectWithValue(message);
     }
   }
@@ -64,6 +71,10 @@ const loginData = createSlice({
     resetLoginState: (state) => {
       state.isLoading = false;
       state.error = null;
+      if (state.toastId) {
+        toast.dismiss(state.toastId);
+        state.toastId = null;
+      }
     },
     clearLoginError: (state) => {
       state.error = null;
@@ -72,7 +83,12 @@ const loginData = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      if (state.toastId) {
+        toast.dismiss(state.toastId);
+        state.toastId = null;
+      }
       localStorage.removeItem('token');
+      toast.info('You have been logged out.');
     },
     setAuthFromStorage: (state) => {
       const token = localStorage.getItem('token');
@@ -87,6 +103,10 @@ const loginData = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
+        if (state.toastId) {
+          toast.dismiss(state.toastId);
+        }
+        state.toastId = toast.loading('Signing you in...');
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -94,6 +114,17 @@ const loginData = createSlice({
         state.token = action.payload.token;
         state.isAuthenticated = true;
         state.error = null;
+        if (state.toastId) {
+          toast.update(state.toastId, {
+            render: 'Signed in successfully! Redirecting...',
+            type: 'success',
+            isLoading: false,
+            autoClose: 2500,
+          });
+          state.toastId = null;
+        } else {
+          toast.success('Signed in successfully!');
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -101,6 +132,17 @@ const loginData = createSlice({
         state.isAuthenticated = false;
         state.user = null;
         state.token = null;
+        if (state.toastId) {
+          toast.update(state.toastId, {
+            render: state.error,
+            type: 'error',
+            isLoading: false,
+            autoClose: 4000,
+          });
+          state.toastId = null;
+        } else {
+          toast.error(state.error);
+        }
       });
   },
 });

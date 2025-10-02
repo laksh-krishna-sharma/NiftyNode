@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast, Id } from 'react-toastify';
 import api from '../../api';
+import { loginUser } from './loginSlice';
 
 export interface RegisterData {
   fullName: string;
@@ -24,6 +26,7 @@ export interface SignUpState {
   isLoading: boolean;
   error: string | null;
   isSuccess: boolean;
+  toastId: Id | null;
 }
 
 const initialState: SignUpState = {
@@ -32,6 +35,7 @@ const initialState: SignUpState = {
   isLoading: false,
   error: null,
   isSuccess: false,
+  toastId: null,
 };
 
 // Async thunk for user registration
@@ -41,7 +45,7 @@ export const registerUser = createAsyncThunk<
   { rejectValue: string }
 >(
   'auth/register',
-  async (userData: RegisterData, { rejectWithValue }) => {
+  async (userData: RegisterData, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.post('/auth/register', userData);
       
@@ -50,9 +54,15 @@ export const registerUser = createAsyncThunk<
         localStorage.setItem('token', response.data.data.token);
       }
       
+      dispatch(loginUser({ email: userData.email, password: userData.password }));
+      
       return response.data.data;
     } catch (error: any) {
-      const message = error.response?.data?.message || error.message || 'Registration failed';
+      const message =
+        error.response?.data?.data?.message ||
+        error.response?.data?.message ||
+        error.message ||
+        'Registration failed';
       return rejectWithValue(message);
     }
   }
@@ -66,6 +76,10 @@ const signUpData = createSlice({
       state.isLoading = false;
       state.error = null;
       state.isSuccess = false;
+      if (state.toastId) {
+        toast.dismiss(state.toastId);
+        state.toastId = null;
+      }
     },
     clearSignUpError: (state) => {
       state.error = null;
@@ -74,7 +88,12 @@ const signUpData = createSlice({
       state.user = null;
       state.token = null;
       state.isSuccess = false;
+      if (state.toastId) {
+        toast.dismiss(state.toastId);
+        state.toastId = null;
+      }
       localStorage.removeItem('token');
+      toast.info('You have been logged out.');
     },
   },
   extraReducers: (builder) => {
@@ -83,6 +102,10 @@ const signUpData = createSlice({
         state.isLoading = true;
         state.error = null;
         state.isSuccess = false;
+        if (state.toastId) {
+          toast.dismiss(state.toastId);
+        }
+        state.toastId = toast.loading('Creating your account...');
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -90,6 +113,17 @@ const signUpData = createSlice({
         state.token = action.payload.token;
         state.isSuccess = true;
         state.error = null;
+        if (state.toastId) {
+          toast.update(state.toastId, {
+            render: 'Account created successfully! Signing you in...',
+            type: 'success',
+            isLoading: false,
+            autoClose: 2500,
+          });
+          state.toastId = null;
+        } else {
+          toast.success('Account created successfully! Signing you in...');
+        }
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -97,6 +131,17 @@ const signUpData = createSlice({
         state.isSuccess = false;
         state.user = null;
         state.token = null;
+        if (state.toastId) {
+          toast.update(state.toastId, {
+            render: state.error,
+            type: 'error',
+            isLoading: false,
+            autoClose: 4000,
+          });
+          state.toastId = null;
+        } else {
+          toast.error(state.error);
+        }
       });
   },
 });

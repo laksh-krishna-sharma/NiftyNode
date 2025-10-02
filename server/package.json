@@ -16,7 +16,8 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@fastify/websocket": "^11.2.0",
+  "@fastify/cors": "^11.1.0",
+  "@fastify/websocket": "^11.2.0",
     "@modelcontextprotocol/sdk": "^1.18.1",
     "@prisma/client": "^6.16.2",
     "bcrypt": "^5.1.1",

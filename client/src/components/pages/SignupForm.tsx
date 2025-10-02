@@ -15,14 +15,13 @@ interface SignupFormProps {
 
 export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector((state) => state.signUp)
+  const { isLoading, error, isSuccess } = useAppSelector((state) => state.signUp)
   
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
   })
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -94,7 +93,7 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
               className="w-full" 
               disabled={isLoading}
             >
-              {isLoading ? "Please wait..." : "Create Account"}
+              {isLoading ? "Creating..." : "Create Account"}
             </Button>
           </form>
           

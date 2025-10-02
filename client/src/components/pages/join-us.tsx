@@ -1,13 +1,23 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { LoginForm } from "./LoginForm"
 import { SignupForm } from "./SignupForm"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Rocket, TrendingUp, Shield, Zap } from "lucide-react"
+import { useAppSelector } from "@/store"
 
 export function JoinUs() {
   const [isLogin, setIsLogin] = useState(false)
+  const { isAuthenticated } = useAppSelector((state) => state.login)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard")
+    }
+  }, [isAuthenticated, router])
 
   const benefits = [
     {

@@ -1,11 +1,13 @@
 "use client"
 
+import { useMemo } from "react"
 import { useTheme } from "@/hooks/use-theme"
 import { useRouter, usePathname } from "next/navigation"
-import { Moon, Sun, Users, UserPlus, HelpCircle, X } from "lucide-react"
+import { Moon, Sun, Users, UserPlus, HelpCircle, X, LayoutDashboard, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
+import { useAppDispatch, useAppSelector } from "@/store"
+import { logout as logoutAction } from "@/store/slices/auth/loginSlice"
 
 interface SidebarProps {
   activeItem: string
@@ -14,19 +16,39 @@ interface SidebarProps {
   isMobile?: boolean
 }
 
-const menuItems = [
-  { id: "about", label: "About Us", icon: Users, href: "/about" },
-  { id: "join", label: "Join Us", icon: UserPlus, href: "/join" },
-  { id: "help", label: "Help", icon: HelpCircle, href: "/help" },
-]
-
 export function Sidebar({ activeItem, isOpen = true, onClose, isMobile = false }: SidebarProps) {
   const { resolvedTheme, setTheme } = useTheme()
   const router = useRouter()
   const pathname = usePathname()
+  const { isAuthenticated } = useAppSelector((state) => state.login)
+  const dispatch = useAppDispatch()
+
+  const menuItems = useMemo(() => {
+    if (isAuthenticated) {
+      return [
+        { id: "about", label: "About Us", icon: Users, href: "/about" },
+        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
+        { id: "help", label: "Help", icon: HelpCircle, href: "/help" },
+      ]
+    }
+
+    return [
+      { id: "about", label: "About Us", icon: Users, href: "/about" },
+      { id: "join", label: "Join Us", icon: UserPlus, href: "/join" },
+      { id: "help", label: "Help", icon: HelpCircle, href: "/help" },
+    ]
+  }, [isAuthenticated])
 
   const handleNavigation = (href: string) => {
     router.push(href)
+    if (isMobile && onClose) {
+      onClose()
+    }
+  }
+
+  const handleLogout = () => {
+    dispatch(logoutAction())
+    router.push("/join")
     if (isMobile && onClose) {
       onClose()
     }
@@ -84,12 +106,12 @@ export function Sidebar({ activeItem, isOpen = true, onClose, isMobile = false }
                   key={item.id}
                   variant={isActive ? "default" : "ghost"}
                   className={cn(
-                    "w-full justify-start gap-3 h-12",
+                    "w-full justify-start gap-3 h-12 cursor-pointer",
                     isActive && "bg-primary text-primary-foreground"
                   )}
                   onClick={() => handleNavigation(item.href)}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className={cn("h-5 w-5", isActive ? "!text-primary-foreground" : "")} />
                   {item.label}
                 </Button>
               )
@@ -97,12 +119,23 @@ export function Sidebar({ activeItem, isOpen = true, onClose, isMobile = false }
           </nav>
 
           {/* Mobile Theme Switcher */}
-          <div className="p-4 border-t border-border">
+          <div className="p-4 border-t border-border space-y-3">
+            {isAuthenticated && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleLogout}
+                className="w-full gap-2 cursor-pointer"
+              >
+                <LogOut className="h-4 w-4 !text-destructive-foreground" />
+                Logout
+              </Button>
+            )}
             <Button
               variant="outline"
               size="sm"
               onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
-              className="w-full gap-2"
+              className="w-full gap-2 cursor-pointer"
             >
               {resolvedTheme === "light" ? (
                 <>
@@ -146,12 +179,12 @@ export function Sidebar({ activeItem, isOpen = true, onClose, isMobile = false }
               key={item.id}
               variant={isActive ? "default" : "ghost"}
               className={cn(
-                "w-full justify-start gap-3 h-12",
+                "w-full justify-start gap-3 h-12 cursor-pointer",
                 isActive && "bg-primary text-primary-foreground"
               )}
               onClick={() => handleNavigation(item.href)}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className={cn("h-5 w-5", isActive ? "!text-primary-foreground" : "")} />
               {item.label}
             </Button>
           )
@@ -159,26 +192,37 @@ export function Sidebar({ activeItem, isOpen = true, onClose, isMobile = false }
       </nav>
 
       {/* Theme Switcher */}
-      <div className="p-4 border-t border-border">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
-          className="w-full gap-2"
-        >
-          {resolvedTheme === "light" ? (
-            <>
-              <Moon className="h-4 w-4" />
-              Dark Mode
-            </>
-          ) : (
-            <>
-              <Sun className="h-4 w-4" />
-              Light Mode
-            </>
-          )}
-        </Button>
-      </div>
+          <div className="p-4 border-t border-border space-y-3">
+            {isAuthenticated && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleLogout}
+                className="w-full gap-2 cursor-pointer"
+              >
+                <LogOut className="h-4 w-4 !text-destructive-foreground" />
+                Logout
+              </Button>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
+              className="w-full gap-2 cursor-pointer"
+            >
+              {resolvedTheme === "light" ? (
+                <>
+                  <Moon className="h-4 w-4" />
+                  Dark Mode
+                </>
+              ) : (
+                <>
+                  <Sun className="h-4 w-4" />
+                  Light Mode
+                </>
+              )}
+            </Button>
+          </div>
     </div>
   )
 }

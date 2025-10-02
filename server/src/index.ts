@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import authRoutes from './auth/routes/authRoutes';
 import kiteAuthRoutes from './kite-auth/routes/kiteAuthRoutes';
 import logger from './utils/logger';
@@ -7,6 +8,33 @@ import appConfig from './config';
 
 const fastify = Fastify({
   logger: false,
+});
+
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000'];
+
+await fastify.register(cors, {
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      cb(null, true);
+      return;
+    }
+
+    cb(new Error('Not allowed'), false);
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 86400,
+});
+
+fastify.addHook('onSend', (request, reply, payload, done) => {
+  const origin = request.headers.origin;
+  if (!origin || allowedOrigins.includes(origin)) {
+    reply.header('Access-Control-Allow-Origin', origin || allowedOrigins[0]);
+    reply.header('Access-Control-Allow-Credentials', 'true');
+  }
+  reply.header('Vary', 'Origin');
+  done(null, payload);
 });
 
 fastify.register(authRoutes);

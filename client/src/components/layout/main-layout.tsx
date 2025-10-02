@@ -17,6 +17,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   const getActiveItem = () => {
     if (pathname === "/about") return "about"
     if (pathname === "/join") return "join"
+    if (pathname === "/dashboard") return "dashboard"
     if (pathname === "/help") return "help"
     return "about" // default
   }

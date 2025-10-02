@@ -15,7 +15,7 @@ interface LoginFormProps {
 
 export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector((state) => state.login)
+  const { isLoading, error, isAuthenticated } = useAppSelector((state) => state.login)
   
   const [formData, setFormData] = useState({
     email: "",
@@ -78,7 +78,7 @@ export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
             className="w-full" 
             disabled={isLoading}
           >
-            {isLoading ? "Please wait..." : "Sign In"}
+            {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
         
