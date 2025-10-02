@@ -77,7 +77,34 @@ curl -X POST http://localhost:3000/kite/session \
   -d '{"sessionId":"actual-session-id-from-step-1","requestToken":"request-token-from-url","apiKey":"your-api-key","apiSecret":"your-api-secret"}'
 
 # 3. Get stored access token for API calls
+# 3. Get stored access token for API calls
 curl http://localhost:3000/kite/token/your-api-key
+
+# 4. Place a BUY order
+curl -X POST http://localhost:3000/kite/order/place \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiKey": "your-api-key",
+    "tradingSymbol": "RELIANCE",
+    "quantity": 1,
+    "transactionType": "BUY"
+  }'
+
+# 5. Place a SELL order
+curl -X POST http://localhost:3000/kite/order/place \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiKey": "your-api-key",
+    "tradingSymbol": "RELIANCE",
+    "quantity": 1,
+    "transactionType": "SELL"
+  }'
+
+# 6. Get order book
+curl "http://localhost:3000/kite/orders?apiKey=your-api-key"
+
+# 7. Get positions
+curl "http://localhost:3000/kite/positions?apiKey=your-api-key"
 ```
 
 ### Kite Authentication
@@ -86,6 +113,11 @@ curl http://localhost:3000/kite/token/your-api-key
 - `GET /kite/token/:apiKey` - Get stored access token
 - `GET /kite/callback` - Handle Kite callback (extracts request token)
 - `GET /trade/callback` - Alternative callback route
+
+### Kite Trading Orders
+- `POST /kite/order/place` - Place buy/sell orders
+- `GET /kite/orders` - Get order book
+- `GET /kite/positions` - Get current positions
 
 ## Logging
 
