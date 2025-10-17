@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import appConfig from '../config';
 
-const JWT_SECRET = appConfig.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = appConfig.JWT_SECRET || 'are-teri-maa-ka-bhod-phat-jayega';
 
 export const generateToken = (payload: object): string => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
